@@ -1,6 +1,6 @@
 %Benjamin Bangasser
 %University of Minnesota
-%14 June 201
+%14 June 2010
 
 %Reduplicate the Chan Motor-Clutch model with event stepping
 %Use for simulating one dynamic run
