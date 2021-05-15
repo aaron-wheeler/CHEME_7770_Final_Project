@@ -35,6 +35,11 @@ k_on = 0.3; %s-1, pseudo-first order clutch on-rate
 k_off = 0.1; %s-1, basal first-order off-rate
 Force_bond = 2; %pN, characteristic break force
 stiffness_clutch = 0.8; %pN/nm, clutch stiffness
+delE21 = (4.8*1000*(4.114/9.83E-22)) / 6.022E23; %kcal/mol * cal/kcal * pN*nm/cal / mol^-1 = pN*nm
+kT = 4.114*(310/298); %pN*nm @ 310K
+phi = exp(delE21/kT); % Equilibrium Occupancy Parameter ~ Occ @ zero force
+k1rup = 3.3E-5; % dissociation rate of off rate at zero force  [s^-1]
+f12 = 30; % scaling force at low force [pN] 
 
 %%
 %Length Parameters
@@ -79,7 +84,7 @@ while simtime < max_time
     %Calculate off-rate for engaged clutches based on clutch deformations
     clutch_Forces = stiffness_clutch.*(x_clutch-x_substrate);
     norm_clutch_Forces = clutch_Forces./Force_bond;
-    clutch_unbinding = k_off.*exp(norm_clutch_Forces);
+    clutch_unbinding = (phi*k1rup + exp(clutch_Forces./f12) .* k_off.*exp(norm_clutch_Forces)) ./ (phi + exp(clutch_Forces./f12));
     clutch_unbinding = clutch_unbinding.*(clutch_state == 1);
     clutch_binding = k_on.*(clutch_state == 0);
     clutch_rates = clutch_unbinding+clutch_binding;
@@ -107,7 +112,7 @@ while simtime < max_time
         x_clutch(n_clutch) = 0;
         clutch_state(n_clutch) = 0;
         clutch_Forces(n_clutch) = 0;
-        clutch_rates(n_clutch) = k_off;
+        clutch_rates(n_clutch) = (phi*k1rup + k_off) ./ (phi + 1);
     %Execute the event (binding or unbinding of selected clutch)
     elseif clutch_state(selected_event) == 0 %unbound
         clutch_state(selected_event) = 1;
