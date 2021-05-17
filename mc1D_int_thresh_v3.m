@@ -53,7 +53,7 @@ total_actin(1) = F_actin(1)+G_actin(1);
 % clutchpos(1) = Length_cell; %Position of clutches relative to cell edge
 
 %Substrate
-stiffness_substrate = 1; %pN/nm, substrate stiffness
+stiffness_substrate = 1000; %pN/nm, substrate stiffness
 
 %%
 %Initialization
