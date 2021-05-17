@@ -23,6 +23,7 @@ vp = 200; %leading edge polymerization velocity, nm/s
 Kc = 0.8; %clutch stiffness, pN/nm
 tmax = 10000; %max simulation time, s
 
+% Ksub = 1;
 Ksub = logspace(-1,2,20); %substrate stiffness, pN/nm
 
 simdate = date;
