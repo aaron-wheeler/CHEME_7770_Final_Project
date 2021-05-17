@@ -22,7 +22,7 @@ close all
 %Parameters
 
 %Motors
-n_motors = 150;
+n_motors = 3*150;
 Force_motor = 2; %pN, stall force
 velocity_unloaded = 120; %nm/s, unloaded velocity
 
@@ -38,7 +38,7 @@ stiffness_clutch = 0.8; %pN/nm, clutch stiffness
 delE21 = (4.8*1000*(4.114/9.83E-22)) / 6.022E23; %kcal/mol * cal/kcal * pN*nm/cal / mol^-1 = pN*nm
 kT = 4.114*(310/298); %pN*nm @ 310K
 phi = exp(delE21/kT); % Equilibrium Occupancy Parameter ~ Occ @ zero force
-k1rup = 3.3E-5; % dissociation rate of off rate at zero force  [s^-1]
+k1rup = 3; % dissociation rate of off rate at zero force  [s^-1]
 f12 = 30; % scaling force at low force [pN] 
 
 %%
@@ -53,7 +53,7 @@ total_actin(1) = F_actin(1)+G_actin(1);
 % clutchpos(1) = Length_cell; %Position of clutches relative to cell edge
 
 %Substrate
-stiffness_substrate = 1000; %pN/nm, substrate stiffness
+stiffness_substrate = 1; %pN/nm, substrate stiffness
 
 %%
 %Initialization
