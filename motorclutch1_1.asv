@@ -124,12 +124,9 @@ for ii = 1:length(Ksub)
     figure(1)
     subplot(2,1,ii)
     plot(t,subpos)
-    if ii == 2
-        plot(t,subpos,'m')
-    end
     xlabel('time (s)')
     ylabel('substrate position (nm)')
-    title(['Ksub = ', num2str(Ksub(ii))])
+    title()
     axis([0 60 min(subpos) 0])
 end
 

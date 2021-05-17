@@ -24,7 +24,7 @@ Kc=0.8; %Clutch spring constant in pN/nm
 gain=0; %gain of feedback loop
 
 events=1e5; %number of events to simulate
-stiffness=logspace(-2,2,10); %define stiffness vector
+stiffness=logspace(-2,2,100); %define stiffness vector
 retro=zeros(1,length(stiffness)); %initialize retro flow vector
 failfreq=zeros(1,length(stiffness)); %initialize failure frequency vector
 avnumcon=zeros(1,length(stiffness)); %initialize average number of engaged clutches vector
@@ -155,14 +155,18 @@ for jj=1:length(stiffness)
     rebcyc(jj)=sum(crebind)./failures(jj);
 end
 figure;
-subplot(1,2,1)
+% subplot(1,2,1)
 semilogx(stiffness,retro)
 xlabel('Substrate stiffness (pN/nm)')
 ylabel('Mean retrograde flow (nm/s)')
+hold on
 
-subplot(1,2,2)
+yyaxis right
+% subplot(1,2,2)
 semilogx(stiffness,-avtrac)
 xlabel('Substrate stiffness (pN/nm)')
 ylabel('Mean traction force (pN)')
+hold off
+legend('Mean RF','Mean TF','Location','east')
 
 toc

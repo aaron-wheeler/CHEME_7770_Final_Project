@@ -74,6 +74,8 @@ clutchsize = n_clutch;
 cycles = 0;
 
 %%
+tic
+
 while simtime < max_time
     
     %Calculate off-rate for engaged clutches based on clutch deformations
@@ -164,6 +166,8 @@ while simtime < max_time
     clutch_Forces_nz_max(event) = max(clutch_Forces);
     
 end
+
+toc
 
 %Numerical outputs
 TF = sum((traction_force.*t_step)/simtime(end))
