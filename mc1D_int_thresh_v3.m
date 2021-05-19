@@ -22,7 +22,7 @@ close all
 %Parameters
 
 %Motors
-n_motors = 3*150;
+n_motors = 150;
 Force_motor = 2; %pN, stall force
 velocity_unloaded = 120; %nm/s, unloaded velocity
 
@@ -30,16 +30,17 @@ velocity_unloaded = 120; %nm/s, unloaded velocity
 k_add_base = 1; %Basal clutch addition rate (s^-1)
 Force_thresh = 10; %pN, threshold force for integrin reinforcement
 n_clutch_max = 450; %
-n_clutch = 75;
+n_clutch = 75; %
 k_on = 0.3; %s-1, pseudo-first order clutch on-rate
 k_off = 0.1; %s-1, basal first-order off-rate
 Force_bond = 2; %pN, characteristic break force
 stiffness_clutch = 0.8; %pN/nm, clutch stiffness
-delE21 = (4.8*1000*(4.114/9.83E-22)) / 6.022E23; %kcal/mol * cal/kcal * pN*nm/cal / mol^-1 = pN*nm
-kT = 4.114*(310/298); %pN*nm @ 310K
-phi = exp(delE21/kT); % Equilibrium Occupancy Parameter ~ Occ @ zero force
+delE21 = (4.8*1000*(4.114/9.83E-22)) / 6.022E23; %kcal/mol * cal/kcal * pN*nm/cal / mol^-1 = pN*nm Difference in energy level between folded and unfolded state in solution under constant T,P
+kbT = 4.114*(310/298); %pN*nm    boltzman constant * 310K
+phi = exp(delE21/kbT); % Equilibrium Occupancy Parameter ~ Occ @ zero force
 k1rup = 3; % dissociation rate of off rate at zero force  [s^-1]
-f12 = 30; % scaling force at low force [pN] 
+Fu = 30; % Force of 1/2 occupancy of the unfolded and folded states under AFM [pN]
+f12 = Fu/(delE21/kbT); % scaling force for low force pathway [pN]
 
 %%
 %Length Parameters
