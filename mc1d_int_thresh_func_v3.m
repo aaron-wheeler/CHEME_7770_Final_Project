@@ -75,6 +75,12 @@ n_thresh = [];
 clutch_add_rate = [];
 clutchsize = n_clutch;
 cycles = 0;
+delE21 = (4.8*1000*(4.114/9.83E-22)) / 6.022E23; %kcal/mol * cal/kcal * pN*nm/cal / mol^-1 = pN*nm Difference in energy level between folded and unfolded state in solution under constant T,P
+kbT = 4.114*(310/298); %pN*nm    boltzman constant * 310K
+phi = exp(delE21/kbT); % Equilibrium Occupancy Parameter ~ Occ @ zero force
+k1rup = 10; % dissociation rate of off rate at zero force  [s^-1]
+Fu = 30; % Force of 1/2 occupancy of the unfolded and folded states under AFM [pN]
+f12 = Fu/(delE21/kbT); % scaling force for low force pathway [pN]
 
 %%
 while simtime < max_time
@@ -82,7 +88,7 @@ while simtime < max_time
     %Calculate off-rate for engaged clutches based on clutch deformations
     clutch_Forces = stiffness_clutch.*(x_clutch-x_substrate);
     norm_clutch_Forces = clutch_Forces./Force_bond;
-    clutch_unbinding = k_off.*exp(norm_clutch_Forces);
+    clutch_unbinding = (phi*k1rup + exp(clutch_Forces./f12) .* k_off.*exp(norm_clutch_Forces)) ./ (phi + exp(clutch_Forces./f12));
     clutch_unbinding = clutch_unbinding.*(clutch_state == 1);
     clutch_binding = k_on.*(clutch_state == 0);
     clutch_rates = clutch_unbinding+clutch_binding;
@@ -110,7 +116,7 @@ while simtime < max_time
         x_clutch(n_clutch) = 0;
         clutch_state(n_clutch) = 0;
         clutch_Forces(n_clutch) = 0;
-        clutch_rates(n_clutch) = k_off;
+        clutch_rates(n_clutch) = (phi*k1rup + k_off) ./ (phi + 1);
     %Execute the event (binding or unbinding of selected clutch)
     elseif clutch_state(selected_event) == 0 %unbound
         clutch_state(selected_event) = 1;

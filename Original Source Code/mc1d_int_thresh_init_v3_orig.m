@@ -44,7 +44,7 @@ Fperengclutch = [];
 
 for ii = 1:size(Ksub,2)
     
-    [Ftrac,vflow,nclutch,neng,cellar] = mc1d_int_thresh_func_v3(tmax,...
+    [Ftrac,vflow,nclutch,neng,cellar] = mc1d_int_thresh_func_v3_orig(tmax,...
         nm,Fm,vu,kaddb,ncmax,nc,kon,koff,Fb,Ft,Kc,Fact,Gact,vp,Ksub(ii));
     
     traction_force(ii) = Ftrac;
