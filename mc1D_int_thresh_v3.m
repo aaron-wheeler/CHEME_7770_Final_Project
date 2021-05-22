@@ -38,7 +38,7 @@ stiffness_clutch = 0.8; %pN/nm, clutch stiffness
 delE21 = (4.8*1000*(4.114/9.83E-22)) / 6.022E23; %kcal/mol * cal/kcal * pN*nm/cal / mol^-1 = pN*nm Difference in energy level between folded and unfolded state in solution under constant T,P
 kbT = 4.114*(310/298); %pN*nm    boltzman constant * 310K
 phi = exp(delE21/kbT); % Equilibrium Occupancy Parameter ~ Occ @ zero force
-k1rup = 10; % dissociation rate of off rate at zero force  [s^-1]
+k1rup = 1; % dissociation rate of off rate at zero force  [s^-1]
 Fu = 30; % Force of 1/2 occupancy of the unfolded and folded states under AFM [pN]
 f12 = Fu/(delE21/kbT); % scaling force for low force pathway [pN]
 
