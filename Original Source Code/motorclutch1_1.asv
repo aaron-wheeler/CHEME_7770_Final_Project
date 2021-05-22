@@ -129,7 +129,7 @@ for ii = 1:length(Ksub)
     end
     xlabel('time (s)')
     ylabel('substrate position (nm)')
-    title(['Ksub = ', num2str(Ksub(ii)), ' [pN/nm]'])
+    title(['Ksub = ', num2str(Ksub(ii)), '[pN/nm]'])
     axis([0 60 min(subpos) 0])
 end
 
